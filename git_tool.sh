@@ -36,13 +36,13 @@ function pushDeploy() {
     echo -e  "\033[${color}m[合并deplay]\033[0m 结束"
 }
 
-if [[ $1 == "md" ]]; then
+if [[ $1 == "d" ]]; then
   branchName=$2
   if [[ $branchName == "" ]]; then
     branchName=`gitBranch`
   fi
   pushDeploy $branchName
-elif  [[ $1 == "pm" ]];then
+elif  [[ $1 == "m" ]];then
   if [[  -d '.git' ]];then
     cd ../
     pwd
