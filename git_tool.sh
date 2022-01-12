@@ -8,6 +8,7 @@ function pullMaster() {
 function gitBranch(){
 	  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 }
+
 function help() {
   echo "============ git 辅助工具 ==============="
   echo "命令："
@@ -69,6 +70,7 @@ function freshMaster() {
       fi
     done
 }
+
 if [[ $1 == "d" ]]; then
   branchName=$2
   if [[ $branchName == "" ]]; then
