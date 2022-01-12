@@ -19,6 +19,7 @@ function help() {
   echo "msg  eg:gg msg [commit msg] 提交当前分支并提交到远程分支"
   echo "m    eg:gg m                当前是git仓库，跳到上一层。当前不是git仓库，会将当前目录下所有git项目切到master并拉最新代码"
   echo "mb   eg:gg mb [A] [B]       合并A分支到B"
+  echo "pm   eg:gg pm               pull origin master"
 }
 
 function pushDeploy() {
@@ -155,6 +156,10 @@ if [[ $1 == 'mb' ]];then
   fi
   mergeBranch $2 $tagetBranch
   exit
+fi
+
+if [[ $1 == "pm" ]];then
+  git pull origin master
 fi
 
 help
