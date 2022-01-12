@@ -167,9 +167,11 @@ fi
 if [[ $1 == 'c' ]]; then
   if [[ $2 == "" ]];then
      git checkout master
+     git pull origin master
      exit
   fi
   git checkout $2
+  git pull origin $2
   exit
 fi
 
