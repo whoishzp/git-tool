@@ -16,7 +16,7 @@ function help() {
   echo "d    eg:gg d                将当前分支自动合并到仓库的deploy-test-branch"
   echo "cm   eg:gg cm               切换当前仓库到master分支"
   echo "nb   eg:gg nb [branch name] 新建分支"
-  echo "msg  eg:gg msg [commit msg] 将当前分支提交到远程分支"
+  echo "msg  eg:gg msg [commit msg] 提交当前分支并提交到远程分支"
   echo "m    eg:gg m                当前是git仓库，跳到上一层。当前不是git仓库，会将当前目录下所有git项目切到master并拉最新代码"
   echo "mb   eg:gg mb [A] [B]       合并A分支到B"
 }
