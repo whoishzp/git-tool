@@ -20,6 +20,7 @@ function help() {
   echo "m    eg:gg m                当前是git仓库，跳到上一层。当前不是git仓库，会将当前目录下所有git项目切到master并拉最新代码"
   echo "mb   eg:gg mb [A] [B]       合并A分支到B"
   echo "pm   eg:gg pm               pull origin master"
+  echo "c    eg:gg c [branch]       git checkout branch"
 }
 
 function pushDeploy() {
@@ -160,6 +161,16 @@ fi
 
 if [[ $1 == "pm" ]];then
   git pull origin master
+  exit
+fi
+
+if [[ $1 == 'c' ]]; then
+  if [[ $2 == "" ]];then
+     git checkout master
+     exit
+  fi
+  git checkout $2
+  exit
 fi
 
 help
