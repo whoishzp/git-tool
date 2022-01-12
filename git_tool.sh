@@ -5,8 +5,18 @@ function pullMaster() {
     git pull origin master
 }
 
-gitBranch(){
+function gitBranch(){
 	  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+function help() {
+  echo "============ git 辅助工具 ==============="
+  echo "命令："
+  echo "h    eg:gg h                查看帮助项"
+  echo "d    eg:gg d                将当前分支自动合并到仓库的deploy-test-branch"
+  echo "cm   eg:gg cm               切换当前仓库到master分支"
+  echo "nb   eg:gg nb [branch name] 新建分支"
+  echo "msg  eg:gg msg [commit msg] 将当前分支提交到远程分支"
+  echo "m    eg:gg m                当前是git仓库，跳到上一层。当前不是git仓库，会将当前目录下所有git项目切到master并拉最新代码"
 }
 
 function pushDeploy() {
@@ -27,47 +37,62 @@ function pushDeploy() {
     echo -e  "\033[${color}m[提交当前分支]\033[0m 结束"
     color=$[RANDOM%7 + 31]
     echo
-    echo -e  "\033[${color}m[合并deplay]\033[0m 开始"
+    echo -e  "\033[${color}m[合并deploy]\033[0m 开始"
     git checkout deploy-test-branch
     git pull
     git pull origin $branch
     git push origin deploy-test-branch
     git checkout $branch
-    echo -e  "\033[${color}m[合并deplay]\033[0m 结束"
+    echo -e  "\033[${color}m[合并deploy]\033[0m 结束"
 }
 
+function freshMaster() {
+  if [[  -d '.git' ]];then
+      cd ../
+      pwd
+    fi
+    # shellcheck disable=SC2045
+    for name in `ls`; do
+      if [ -d $name ];then
+        cd $name || echo "$name 不存在"
+        if [[  -d '.git'  ]];then
+           color=$[RANDOM%7 + 31]
+           echo -e  "\033[${color}m[$name]\033[0m 开始处理"
+           pullMaster
+           echo -e  "\033[${color}m[$name]\033[0m 处理完成"
+        else
+          echo -e  "\033[31m[$name]\033[0m 不是git仓库"
+        fi
+        echo
+        sleep 1
+        cd ../
+      fi
+    done
+}
 if [[ $1 == "d" ]]; then
   branchName=$2
   if [[ $branchName == "" ]]; then
     branchName=`gitBranch`
   fi
   pushDeploy $branchName
-elif  [[ $1 == "m" ]];then
-  if [[  -d '.git' ]];then
-    cd ../
-    pwd
+elif  [[ $1 == 'h' || $1 == 'help' || $1 == '-h' || $1 == '-help'  ]];then
+  help
+elif  [[ $1 == 'cm' ]];then
+  git checkout master
+  exit 
+elif [[ $1 == 'nb' ]];then 
+  if [[ $2 == '' ]];then 
+     echo "请输入分支名字";
+     exit 
   fi
-  # shellcheck disable=SC2045
-  for name in `ls`; do
-    if [ -d $name ];then
-      cd $name || echo "$name 不存在"
-      if [[  -d '.git'  ]];then
-         color=$[RANDOM%7 + 31]
-         echo -e  "\033[${color}m[$name]\033[0m 开始处理"
-         pullMaster
-         echo -e  "\033[${color}m[$name]\033[0m 处理完成"
-      else
-        echo -e  "\033[31m[$name]\033[0m 不是git仓库"
-      fi
-      echo
-      sleep 1
-      cd ../
-    fi
-  done
+  git checkout -b $2
+  exit
+elif [[ $1 == 'msg' ]];then 
+  git commit -m"$2" -a 
+  git push origin `gitBranch` 
+  exit 
+elif  [[ $1 == "m" ]];then
+  freshMaster
 else
-   branchName=$2
-    if [[ $branchName == "" ]]; then
-      branchName=`gitBranch`
-    fi
-    pushDeploy $branchName
+  help
 fi
