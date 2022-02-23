@@ -1,5 +1,6 @@
 #!/bin/bash
 function pullMaster() {
+    git pull origin master
     git stash
     git checkout master
     git pull origin master
