@@ -59,6 +59,9 @@ function freshMaster() {
     fi
     # shellcheck disable=SC2045
     for name in `ls`; do
+      if [[ $name == 'git-tool' ]]; then
+        continue
+      fi
       if [ -d $name ];then
         cd $name || echo "$name 不存在"
         if [[  -d '.git'  ]];then
@@ -83,6 +86,9 @@ function allChangeBranch() {
     fi
     # shellcheck disable=SC2045
     for name in `ls`; do
+      if [[ $name == 'git-tool' ]]; then
+        continue
+      fi
       if [ -d $name ];then
         cd $name || echo "$name 不存在"
         if [[  -d '.git'  ]];then
