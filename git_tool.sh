@@ -70,7 +70,7 @@ function freshMaster() {
           echo -e  "\033[31m[$name]\033[0m 不是git仓库"
         fi
         echo
-        sleep 1
+        
         cd ../
       fi
     done
@@ -90,7 +90,7 @@ function allChangeBranch() {
            git commit -m"提交当前代码" -a
            if [[ `gitBranch` == $1 ]];then
                  echo -e  "\033[31m[当前在${1}分支]\033[0m 退出"
-                 sleep 2
+                 
                  cd ../
                  continue
            fi
@@ -110,7 +110,7 @@ function allChangeBranch() {
           echo -e  "\033[31m[$name]\033[0m 不是git仓库"
         fi
         echo
-        sleep 2
+        
         cd ../
       fi
     done
