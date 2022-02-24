@@ -106,7 +106,7 @@ function allChangeBranch() {
           echo -e  "\033[31m[$name]\033[0m 不是git仓库"
         fi
         echo
-        sleep 1
+        sleep 1000
         cd ../
       fi
     done
