@@ -93,12 +93,14 @@ function allChangeBranch() {
                  cd ../
                  continue
            fi
-
+          color=$[RANDOM%7 + 31]
           hashBranch=`git branch | grep $1 | wc | awk '{print $1}'`
           if [[ $hashBranch == 1 ]];then
-            echo "has branch ";
+            echo -e  "\033[31m[$name]\033[0m 分支存在，即将切换分支"
+            git checkout $1
           else
-            echo "not has branch ";
+             echo -e  "\033[31m[$name]\033[0m 分支不存在，即将创建分支"
+             git checkout -b $1
           fi
         else
           echo -e  "\033[31m[$name]\033[0m 不是git仓库"
