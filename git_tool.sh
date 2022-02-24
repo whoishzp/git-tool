@@ -105,6 +105,7 @@ function allChangeBranch() {
           if [[ $hashBranch == 1 ]];then
             echo -e  "\033[31m[$name]\033[0m 分支存在，即将切换分支"
             git checkout $1
+            git pull origin $1
             git pull origin master
           else
              echo -e  "\033[31m[$name]\033[0m 分支不存在，即将创建分支"
@@ -169,6 +170,7 @@ fi
 
 if  [[ $1 == 'cm' ]];then
   git checkout master
+  git pull origin master
   exit
 fi
 
@@ -220,6 +222,7 @@ if [[ $1 == 'c' ]]; then
   fi
   git checkout $2
   git pull origin $2
+  git pull origin master
   exit
 fi
 
