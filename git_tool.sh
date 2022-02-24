@@ -96,7 +96,8 @@ function allChangeBranch() {
            git commit -m"提交当前代码" -a
            if [[ `gitBranch` == $1 ]];then
                  echo -e  "\033[${color}m[当前在${1}分支]\033[0m 退出"
-                 
+                 git pull origin $1
+                 git pull origin master
                  cd ../
                  continue
            fi
