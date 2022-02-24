@@ -22,6 +22,7 @@ function help() {
   echo "mb   eg:gg mb [A] [B]       合并A分支到B"
   echo "pm   eg:gg pm               pull origin master"
   echo "c    eg:gg c [branch]       git checkout branch"
+  echo "ab   eg:gg ab [branch]      将项目全部切刀指定分支"
 }
 
 function pushDeploy() {
@@ -65,6 +66,42 @@ function freshMaster() {
            echo -e  "\033[${color}m[$name]\033[0m 开始处理"
            pullMaster
            echo -e  "\033[${color}m[$name]\033[0m 处理完成"
+        else
+          echo -e  "\033[31m[$name]\033[0m 不是git仓库"
+        fi
+        echo
+        sleep 1
+        cd ../
+      fi
+    done
+}
+
+function allChangeBranch() {
+    if [[  -d '.git' ]];then
+          cd ../
+          pwd
+    fi
+    # shellcheck disable=SC2045
+    for name in `ls`; do
+      if [ -d $name ];then
+        cd $name || echo "$name 不存在"
+        if [[  -d '.git'  ]];then
+           color=$[RANDOM%7 + 31]
+           git commit -m"提交当前代码" -a
+           if [[ `gitBranch` == $1 ]];then
+                 echo -e  "\033[31m[当前在${1}分支]\033[0m 退出"
+                 cd ../
+                 continue
+           fi
+          color=$[RANDOM%7 + 31]
+          hashBranch=`git branch | grep $1 | wc | awk '{print $1}'`
+          if [[ $hashBranch == 1 ]];then
+            echo -e  "\033[31m[$name]\033[0m 分支存在，即将切换分支"
+            git checkout $1
+          else
+             echo -e  "\033[31m[$name]\033[0m 分支不存在，即将创建分支"
+             git checkout -b $1
+          fi
         else
           echo -e  "\033[31m[$name]\033[0m 不是git仓库"
         fi
@@ -173,6 +210,15 @@ if [[ $1 == 'c' ]]; then
   fi
   git checkout $2
   git pull origin $2
+  exit
+fi
+
+if [[ $1 == 'ab' ]]; then
+  if [[ $2 == "" ]]; then
+    echo "请输入分支名";
+    exit
+  fi
+  allChangeBranch $2
   exit
 fi
 
