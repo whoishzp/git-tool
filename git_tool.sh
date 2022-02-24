@@ -22,7 +22,7 @@ function help() {
   echo "mb   eg:gg mb [A] [B]       合并A分支到B"
   echo "pm   eg:gg pm               pull origin master"
   echo "c    eg:gg c [branch]       git checkout branch"
-  echo "ab   eg:gg ab [branch]      将项目全部切刀指定分支"
+  echo "ab   eg:gg ab [branch]      将项目全部切到指定分支，没有则创建之"
 }
 
 function pushDeploy() {
