@@ -238,6 +238,7 @@ if [[ $1 == 'ab' ]]; then
 fi
 
 if [[ $1 == 'mf' ]]; then
+  originPath=`pwd`
   base=`pwd`"/base"
   if [[  ! -d $base ]]; then
     mkdir $base
@@ -247,7 +248,8 @@ if [[ $1 == 'mf' ]]; then
   cd "/Users/momo/Documents/project/pj-web/git-tool"
   php "./automanager.php" $base
   # shellcheck disable=SC2164
-  cd -
+  cd $originPath
+  git add .
   exit
 fi
 
