@@ -23,6 +23,7 @@ function help() {
   echo "pm   eg:gg pm               pull origin master"
   echo "c    eg:gg c [branch]       git checkout branch"
   echo "ab   eg:gg ab [branch]      将项目全部切到指定分支，没有则创建之"
+  echo "mf   eg:gg mf [className]   自动创建类,并追加ctx"
 }
 
 function pushDeploy() {
@@ -233,6 +234,20 @@ if [[ $1 == 'ab' ]]; then
     exit
   fi
   allChangeBranch $2
+  exit
+fi
+
+if [[ $1 == 'mf' ]]; then
+  base=`pwd`"/base"
+  if [[  ! -d $base ]]; then
+    mkdir $base
+  fi
+
+  # shellcheck disable=SC2164
+  cd "/Users/momo/Documents/project/pj-web/git-tool"
+  php "./automanager.php" $base
+  # shellcheck disable=SC2164
+  cd -
   exit
 fi
 
