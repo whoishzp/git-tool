@@ -7,4 +7,3 @@
 class {className} extends Base_Component {
 
 }
-
