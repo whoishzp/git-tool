@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('PRC');
 /**
  * @author 韩志普 <han.zhipu@immomo.com>
  * @date   2022/3/17 2:36 下午
@@ -87,9 +88,9 @@ class Automanager {
         file_put_contents($ctxFile, $content);
 
         if (is_file($this->fileName)) {
-            echo PHP_EOL . " 操作成功 ~" . PHP_EOL;
+            echo "操作成功 ~" . PHP_EOL;
         } else {
-            echo PHP_EOL . " 操作失败 ~" . PHP_EOL;
+            echo "操作失败 ~" . PHP_EOL;
         }
     }
 
