@@ -70,7 +70,9 @@ class Automanager {
         ], $content);
 
         //创建文件
-        file_put_contents($this->fileName, $content);
+        if (!is_file($this->fileName)) {
+            file_put_contents($this->fileName, $content);
+        }
 
         //配置ctx
         $ctxFile = $this->module . '/ctx.php';
