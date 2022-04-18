@@ -99,6 +99,7 @@ function allChangeBranch() {
                  echo -e  "\033[${color}m[当前在${1}分支]\033[0m 退出"
                  git pull origin $1
                  git pull origin master
+                 git push origin $1
                  cd ../
                  continue
            fi
@@ -109,11 +110,13 @@ function allChangeBranch() {
             git checkout $1
             git pull origin $1
             git pull origin master
+            git push origin $1
           else
              echo -e  "\033[${color}m[$name]\033[0m 分支不存在，即将创建分支"
              git checkout master
              git pull origin master
              git checkout -b $1
+             git push origin $1
           fi
         else
           echo -e  "\033[${color}m[$name]\033[0m 不是git仓库"
