@@ -245,7 +245,7 @@ if [[ $1 == 'mf' ]]; then
   fi
 
   # shellcheck disable=SC2164
-  cd "/Users/momo/Documents/project/pj-web/git-tool"
+  cd "/Users/zhipuhan/Documents/work/momo/projects/git-tool"
   php "./automanager.php" $base
   # shellcheck disable=SC2164
   cd $originPath
