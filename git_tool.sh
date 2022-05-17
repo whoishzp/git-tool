@@ -44,7 +44,9 @@ function pushDeploy() {
     echo -e  "\033[${color}m[提交当前分支]\033[0m 结束"
     color=$[RANDOM%7 + 31]
     echo
-    echo -e  "\033[${color}m[合并deploy]\033[0m 开始"
+    echo -e  "\033[${color}m[合并deploy]\033[0m 等待中"
+    sleep 3
+    echo -e  "\033[${color}m[合并deploy]\033[0m 等待结束"
     git checkout deploy-test-branch
     git pull
     git pull origin $branch
@@ -248,7 +250,7 @@ if [[ $1 == 'mf' ]]; then
   fi
 
   # shellcheck disable=SC2164
-  cd "/Users/momo/Documents/project/pj-web/git-tool"
+  cd "/Users/zhipuhan/Documents/work/momo/projects/git-tool"
   php "./automanager.php" $base
   # shellcheck disable=SC2164
   cd $originPath
