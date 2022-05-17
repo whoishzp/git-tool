@@ -44,7 +44,9 @@ function pushDeploy() {
     echo -e  "\033[${color}m[提交当前分支]\033[0m 结束"
     color=$[RANDOM%7 + 31]
     echo
-    echo -e  "\033[${color}m[合并deploy]\033[0m 开始"
+    echo -e  "\033[${color}m[合并deploy]\033[0m 等待中"
+    sleep 3
+    echo -e  "\033[${color}m[合并deploy]\033[0m 等待结束"
     git checkout deploy-test-branch
     git pull
     git pull origin $branch
