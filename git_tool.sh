@@ -22,7 +22,6 @@ function help() {
   echo "mb   eg:gg mb [A] [B]       合并A分支到B"
   echo "pm   eg:gg pm               pull origin master"
   echo "c    eg:gg c [branch]       git checkout branch"
-  echo "ab   eg:gg ab [branch]      将项目全部切到指定分支，没有则创建之"
   echo "mf   eg:gg mf [className]   自动创建类,并追加ctx"
 }
 
@@ -230,15 +229,6 @@ if [[ $1 == 'c' ]]; then
   git checkout $2
   git pull origin $2
   git pull origin master
-  exit
-fi
-
-if [[ $1 == 'ab' ]]; then
-  if [[ $2 == "" ]]; then
-    echo "请输入分支名";
-    exit
-  fi
-  allChangeBranch $2
   exit
 fi
 
