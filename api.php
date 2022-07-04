@@ -13,12 +13,12 @@ class Api {
     public function run() {
         $msg = "==========================================================" . PHP_EOL;
         $msg .= "路由说明：".PHP_EOL;
-        $msg .= "{ModuelName:驼峰形式}/{controllerName}}/{methodName1#methodName2}})会被解析为解析：" . PHP_EOL;
-        $msg .= "模块：ModuleName" . PHP_EOL;
-        $msg .= "路由： /api/moduelname/controllerName/methodName1" . PHP_EOL;
-        $msg .= "路由： /api/moduelname/controllerName/methodName2" . PHP_EOL;
+        $msg .= "路由：ModuelName}/{controllerName}}/{methodName1#methodName2}" . PHP_EOL;
+        $msg .= "ModuleName：对应模块，用于寻找controller 和 routes 文件" . PHP_EOL;
+        $msg .= "ControllerName：控制器前缀，如：Index 代表：IndexController" . PHP_EOL;
+        $msg .= "methodNameX： 控制器方法， 一次可以创建多个方法，用#分割" . PHP_EOL;
         $msg .= "==========================================================" . PHP_EOL;
-        $msg .= '请输入路由';
+        $msg .= '请输入路由规则';
         $routeName = Tool::readVal($msg, function($input) {
             $res = explode("/", $input);
             if (count($res) != 3) {
@@ -114,8 +114,11 @@ class Api {
         ], $functionInfo);
 
         $fileInfo = file_get_contents($file);
-        $fileInfo = str_replace("extends BaseController {", "extends BaseController {\n\n" . $content, $fileInfo);
-        file_put_contents($file, $fileInfo);
+        if (strpos($fileInfo, "public function " . $method) === false) {
+            $fileInfo = str_replace("extends BaseController {", "extends BaseController {\n\n" . $content, $fileInfo);
+            file_put_contents($file, $fileInfo);
+        }
+
         echo "创建方法成功:" . $method . PHP_EOL;
     }
 
