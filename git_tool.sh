@@ -23,6 +23,7 @@ function help() {
   echo "pm   eg:gg pm               pull origin master"
   echo "c    eg:gg c [branch]       git checkout branch"
   echo "mf   eg:gg mf [className]   自动创建类,并追加ctx"
+  echo "api  eg:gg api              自动创建控制器api"
 }
 
 function pushDeploy() {
@@ -242,6 +243,22 @@ if [[ $1 == 'mf' ]]; then
   # shellcheck disable=SC2164
   cd "/Users/momo/Documents/project/pj-web/git-tool"
   php "./automanager.php" $base
+  # shellcheck disable=SC2164
+  cd $originPath
+  git add .
+  exit
+fi
+
+if [[ $1 == 'api' ]]; then
+  originPath=`pwd`
+  base=`pwd`"/base"
+  if [[  ! -d $base ]]; then
+    mkdir $base
+  fi
+
+  # shellcheck disable=SC2164
+  cd "/Users/momo/Documents/project/pj-web/git-tool"
+  php "./api.php" $base
   # shellcheck disable=SC2164
   cd $originPath
   git add .
