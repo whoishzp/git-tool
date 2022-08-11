@@ -24,6 +24,7 @@ function help() {
   echo "c    eg:gg c [branch]       git checkout branch"
   echo "mf   eg:gg mf [className]   自动创建类,并追加ctx"
   echo "api  eg:gg api              自动创建控制器api"
+  echo "now  eg:gg now              返回当前所有目录所在分支"
 }
 
 function pushDeploy() {
@@ -173,6 +174,29 @@ fi
 if  [[ $1 == 'h' || $1 == 'help' || $1 == '-h' || $1 == '-help'  ]];then
   help
   exit
+fi
+
+if [[ $1 == 'now' ]];then
+        if [[  -d '.git' ]];then
+          cd ../
+        fi
+        # shellcheck disable=SC2045
+        for name in `ls`; do
+          if [[ $name == 'git-tool' ]]; then
+            continue
+          fi
+          if [ -d $name ];then
+            cd $name || echo "$name 不存在"
+            if [[  -d '.git'  ]];then
+              echo -e  "$name\033[31m[`gitBranch`]\033[0m"
+            else
+              cd ../
+              continue
+            fi
+            cd ../
+          fi
+        done
+        exit
 fi
 
 if  [[ $1 == 'cm' ]];then
