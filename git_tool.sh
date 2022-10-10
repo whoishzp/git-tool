@@ -26,8 +26,10 @@ function help() {
   echo "mf   eg:gg mf [className]   自动创建类,并追加ctx"
   echo "api  eg:gg api              自动创建控制器api"
   echo "now  eg:gg now              返回当前所有目录所在分支"
+  echo "ac  eg:gg ac A Create       将当前目录下所有git包切到指定分支, Create  = 1 时新建分支"
 }
 
+# 切换到deploy-test-branch
 function pushDeploy() {
     if [[  ! -d '.git' ]];then
       echo -e  "\033[35m[当前不是git仓库]\033[0m"
@@ -71,6 +73,7 @@ function pushDeploy() {
     echo -e "\033[32m【 合并成功 】\033[0m"
 }
 
+# 切换所有git到master
 function freshMaster() {
   if [[  -d '.git' ]];then
       cd ../
@@ -98,57 +101,81 @@ function freshMaster() {
     done
 }
 
+# 切换所有git到指定分支
 function allChangeBranch() {
+    newBranch=$2
+    echo -e "\033[35m【 开始切换 】\033[0m"
     if [[  -d '.git' ]];then
           cd ../
-          pwd
+          echo -e "\033[35m【 当前目录：`pwd` 】\033[0m"
     fi
+
     # shellcheck disable=SC2045
     for name in `ls`; do
       if [[ $name == 'git-tool' ]]; then
         continue
       fi
+
       if [ -d $name ];then
-        cd $name || echo "$name 不存在"
+        cd $name || echo -e "\033[36m【 目录不存在：$name 】\033[0m"
         if [[  -d '.git'  ]];then
-           color=$[RANDOM%7 + 31]
-           git commit -m"提交当前代码" -a
-           if [[ `gitBranch` == $1 ]];then
-                 echo -e  "\033[${color}m[当前在${1}分支]\033[0m 退出"
-                 git pull origin $1
-                 git pull origin master
-                 git push origin $1
-                 cd ../
-                 continue
-           fi
+          echo -e "\033[36m【 处理目录：$name 】\033[0m"
+          finishNowBranch
+          function switchBranch() {
+             echo -e "\033[35m【 切到分支：$1 】\033[0m"
+             echo -e "\033[36m【 执行：git pull origin $1 && git pull origin master && git push origin $1 】\033[0m"
+             git pull origin $1   >> /dev/null 2>&1
+             git pull origin master   >> /dev/null 2>&1
+             git push origin $1  >> /dev/null 2>&1
+          }
+          # 在当前分支
+          if [[ `gitBranch` == $1 ]];then
+               switchBranch $1
+               echo -e "\033[32m【 目录处理成功：$name 】\033[0m"
+               cd ../
+               continue
+          fi
+          # 分支存在
           color=$[RANDOM%7 + 31]
           hashBranch=`git branch | grep $1 | wc | awk '{print $1}'`
           if [[ $hashBranch == 1 ]];then
-            echo -e  "\033[${color}m[$name]\033[0m 分支存在，即将切换分支"
-            git checkout $1
-            git pull origin $1
-            git pull origin master
-            git push origin $1
+            switchBranch $1
+            echo -e "\033[32m【 目录处理成功：$name 】\033[0m"
+            cd ../
+            continue
+          # 分支不存在，但需要创建
+          elif [[ $hashBranch != 1 && $newBranch == 1 ]];then
+             echo -e "\033[36m【 分支不存在，新建分支：$1 】\033[0m"
+             echo -e "\033[36m【 git checkout master && git pull origin master && git checkout -b $1 && git push origin $1 】\033[0m"
+             git checkout master   >> /dev/null 2>&1
+             git pull origin master   >> /dev/null 2>&1
+             git checkout -b $1   >> /dev/null 2>&1
+             git push origin $1   >> /dev/null 2>&1
+             echo -e "\033[32m【 目录处理成功：$name 】\033[0m"
+             cd ../
+             continue
           else
-             echo -e  "\033[${color}m[$name]\033[0m 分支不存在，即将创建分支"
-             git checkout master
-             git pull origin master
-             git checkout -b $1
-             git push origin $1
+             echo -e "\033[36m【 分支不存在，不新建分支 】\033[0m"
+             echo -e "\033[32m【 目录处理成功：$name 】\033[0m"
+             cd ../
+             continue
           fi
         else
-          echo -e  "\033[${color}m[$name]\033[0m 不是git仓库"
+          echo -e "\033[32m【 不是git仓库：$name 】\033[0m"
+          cd ../
+          continue
         fi
-        echo
-        
+        echo -e "\033[32m【 不是目录：$name 】\033[0m"
         cd ../
       fi
     done
 }
 
+# 提交当前分支
 function finishNowBranch() {
   localBranch=`gitBranch`
   if [[ $localBranch != 'master' ]];then
+         echo -e "\033[35m【 当前分支：$localBranch 】\033[0m"
          echo -e "\033[36m【 git commit -m '提交改动' *  】\033[0m"
          git commit -m "提交改动" *   >> /dev/null 2>&1
          echo -e "\033[36m【 git push origin $localBranch  】\033[0m"
@@ -156,6 +183,7 @@ function finishNowBranch() {
     fi
 }
 
+# 合并两个分支
 function mergeBranch() {
   if [[  ! -d '.git' ]];then
         echo -e  "\033[35m[当前不是git仓库]\033[0m 退出"
@@ -304,6 +332,18 @@ fi
 
 if [[ $1 == "pm" ]];then
   git pull origin master
+  exit
+fi
+
+if [[ $1 == "ac" ]];then
+  if [[ $2 == '' ]];then
+    echo -e "\033[35m【 请输入分支名 】\033[0m"
+  fi
+  create=0
+  if [[ $3 != '' ]];then
+    create=1
+  fi
+  allChangeBranch $2 $create
   exit
 fi
 
