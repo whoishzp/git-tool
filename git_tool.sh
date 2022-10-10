@@ -284,6 +284,8 @@ if [[ $1 == 'msg' ]];then
   git commit -m"$2" -a  >> /dev/null 2>&1
  echo -e "\033[36m【 git pull origin master 】\033[0m"
  git pull origin master
+
+
   # shellcheck disable=SC2046
   echo -e "\033[36m【 git push origin `gitBranch` 】\033[0m"
   git push origin `gitBranch`
