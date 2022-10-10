@@ -255,10 +255,10 @@ if [[ $1 == 'mt' ]];then
   # shellcheck disable=SC2046
   targetBranch=$2
   localBranch=`gitBranch`
-  echo -e "\033[35m【初始化】\033[0m"
+  echo -e "\033[35m============【初始化】===============\033[0m"
   git commit -m"提交改动" *
   git push origin $localBranch
-  echo -e "\033[37m【开始合并】\033[0m"
+  echo -e "\033[35m===========【开始合并】===============\033[0m"
   mergeBranch $localBranch $tagetBranch
   exit
 fi
