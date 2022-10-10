@@ -146,6 +146,16 @@ function allChangeBranch() {
     done
 }
 
+function finishNowBranch() {
+  localBranch=`gitBranch`
+  if [[ $localBranch != 'master' ]];then
+         echo -e "\033[36m【 git commit -m '提交改动' *  】\033[0m"
+         git commit -m "提交改动" *   >> /dev/null 2>&1
+         echo -e "\033[36m【 git push origin $localBranch  】\033[0m"
+         git push origin $localBranch
+    fi
+}
+
 function mergeBranch() {
   if [[  ! -d '.git' ]];then
         echo -e  "\033[35m[当前不是git仓库]\033[0m 退出"
@@ -224,6 +234,7 @@ if [[ $1 == 'now' ]];then
 fi
 
 if  [[ $1 == 'cm' ]];then
+  finishNowBranch
   git checkout master
   git pull origin master
   exit
@@ -234,6 +245,7 @@ if [[ $1 == 'nb' ]];then
      echo "请输入分支名字";
      exit 
   fi
+  echo -e "\033[35m【 git checkout -b $2 】\033[0m"
   git checkout -b $2
   exit
 fi
@@ -312,12 +324,7 @@ if [[ $1 == 'c' ]]; then
   fi
   echo -e "\033[35m【 开始 】\033[0m"
   echo -e "\033[35m【 当前分支：$localBranch 】\033[0m"
-  if [[ $localBranch != 'master' ]];then
-       echo -e "\033[36m【 git commit -m '提交改动' *  】\033[0m"
-       git commit -m "提交改动" *   >> /dev/null 2>&1
-       echo -e "\033[36m【 git push origin $localBranch  】\033[0m"
-       git push origin $localBranch
-  fi
+  finishNowBranch
   echo -e "\033[36m【 git checkout $2 】\033[0m"
   git checkout $2   >> /dev/null 2>&1
   echo -e "\033[36m【 git pull origin $2 】\033[0m"
