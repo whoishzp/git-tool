@@ -272,14 +272,32 @@ if [[ $1 == "pm" ]];then
 fi
 
 if [[ $1 == 'c' ]]; then
+  localBranch=`gitBranch`
   if [[ $2 == "" ]];then
-     git checkout master
+     echo -e "\033[31m======================【开始提交】=====================\033[0m"
+     echo -e "\033[36m======================【git commit -m 提交改动 *】=====================\033[0m"
+     git commit -m "提交改动" *
+     echo -e "\033[36m======================【git pull origin master】=====================\033[0m"
      git pull origin master
+     echo -e "\033[36m======================【git push origin $localBranch】=====================\033[0m"
+     git push origin $localBranch
+     echo -e "\033[32m======================【提交结束】=====================\033[0m"
      exit
   fi
-  git checkout $2
-  git pull origin $2
+  echo -e "\033[31m======================【开始】=====================\033[0m"
+  echo -e "\033[36m======================【git push origin $localBranch】=====================\033[0m"
   git pull origin master
+  git commit -m "提交改动" *
+  git push origin $localBranch
+  echo -e "\033[36m======================【git checkout $2】=====================\033[0m"
+  git checkout $2
+  echo -e "\033[36m======================【git pull origin $2】=====================\033[0m"
+  git pull origin $2
+  echo -e "\033[36m======================【git pull origin master】=====================\033[0m"
+  git pull origin master
+  echo -e "\033[36m======================【git push origin $2】=====================\033[0m"
+  git push origin $2
+  echo -e "\033[32m======================【切换分支成功】=====================\033[0m"
   exit
 fi
 
