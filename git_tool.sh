@@ -63,7 +63,7 @@ function pushDeploy() {
     echo -e "\033[36m【  git checkout deploy-test-branch  】\033[0m"
     git checkout deploy-test-branch  >> /dev/null 2>&1
     echo -e "\033[36m【 git pull 】\033[0m"
-    git pull  >> /dev/null 2>&1
+    git pull
     echo -e "\033[36m【 git pull origin $branch  】\033[0m"
     git pull origin $branch
     echo -e "\033[36m【 git push origin deploy-test-branch 】\033[0m"
@@ -214,7 +214,7 @@ function mergeBranch() {
       echo -e "\033[36m【 git checkout $2 】\033[0m"
       git checkout $2  >> /dev/null 2>&1
       echo -e "\033[36m【 git pull 】\033[0m"
-      git pull  >> /dev/null 2>&1
+      git pull
       echo -e "\033[36m【 git pull origin $branch 】\033[0m"
       git pull origin $branch
       echo -e "\033[36m【 git push origin $2 】\033[0m"
@@ -368,7 +368,7 @@ if [[ $1 == 'c' ]]; then
   echo -e "\033[36m【 git checkout $2 】\033[0m"
   git checkout $2   >> /dev/null 2>&1
   echo -e "\033[36m【 git pull origin $2 】\033[0m"
-  git pull origin $2   >> /dev/null 2>&1
+  git pull origin $2
   echo -e "\033[36m【 git pull origin master 】\033[0m"
   git pull origin master 
   echo -e "\033[36m【 git push origin $2 】\033[0m"
