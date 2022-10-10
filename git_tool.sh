@@ -139,32 +139,32 @@ function mergeBranch() {
       fi
       # shellcheck disable=SC2053
       if [[ `gitBranch` == $2 ]];then
-        echo -e  "\033[31m[当前是${2}分支]\033[0m 开始合并 ${1}"
+        echo -e  "\033[31m=====================[当前是${2}分支]\033[0m 开始合并 ${1}====================="
         git pull origin $1
         git push origin $2
-        echo -e  "\033[31m[当前是${2}分支]\033[0m 合并结束"
+        echo -e  "\033[31m=====================[当前是${2}分支]\033[0m 合并结束====================="
         exit
       fi
-      echo -e  "\033[31m[当前分支]\033[0m $1"
+      echo -e  "\033[31m=====================[当前分支]\033[0m $1====================="
       color=$[RANDOM%7 + 31]
-      echo -e  "\033[${color}m[提交当前分支]\033[0m 开始"
+      echo -e  "\033[${color}m=====================[提交当前分支]\033[0m 开始====================="
       branch=$1
       if [[ `gitBranch` != $branch ]];then
-        echo -e "\033[${color}m[当前分支不对]\033[0m 当前分支[`gitBranch`],需要合并的来源分支[{$branch}]"
+        echo -e "\033[${color}m=====================[当前分支不对]\033[0m 当前分支[`gitBranch`],需要合并的来源分支[{$branch}]====================="
         exit
       fi
       git commit -m"更新分支逻辑" -a
       git push origin $branch
-      echo -e  "\033[${color}m[提交当前分支]\033[0m 结束"
+      echo -e  "\033[${color}m=====================[提交当前分支]\033[0m 结束====================="
       color=$[RANDOM%7 + 31]
       echo
-      echo -e  "\033[${color}m[合并到${2}]\033[0m 开始"
+      echo -e  "\033[${color}m=====================[合并到${2}]\033[0m 开始====================="
       git checkout $2
       git pull
       git pull origin $branch
       git push origin $2
       git checkout $branch
-      echo -e  "\033[${color}m[合并到${2}]\033[0m 结束"
+      echo -e  "\033[${color}m=====================[合并到${2}]\033[0m 结束====================="
 }
 
 if [[ $1 == "d" ]]; then
