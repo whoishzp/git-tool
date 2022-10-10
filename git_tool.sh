@@ -151,6 +151,7 @@ function mergeBranch() {
       branch=$1
       if [[ `gitBranch` != $branch ]];then
         echo -e "\033[${color}m[当前分支不对]\033[0m 当前分支[`gitBranch`],需要合并的来源分支[{$branch}]"
+        exit
       fi
       git commit -m"更新分支逻辑" -a
       git push origin $branch
@@ -240,24 +241,27 @@ if [[ $1 == 'mb' ]];then
   if [[ $tagetBranch == "" ]];then
     tagetBranch=`gitBranch`
   fi
+  git commit -m "合并前先提交" *
+  git push origin `gitBranch`
   mergeBranch $2 $tagetBranch
   exit
 fi
 
 if [[ $1 == 'mt' ]];then
   if [[ $2 == "" ]];then
-    echo "请输出分支: gg mb [from branch]"
+    echo "请输入分支: gg mt [Target Branch]"
     exit
   fi
   # shellcheck disable=SC2046
-  tagetBranch=$3
-  if [[ $tagetBranch == "" ]];then
-    tagetBranch=`gitBranch`
-  fi
-  mergeBranch $2 $tagetBranch
+  targetBranch=$2
+  localBranch=`gitBranch`
+  echo -e "【初始化】"
+  git commit -m"提交改动" *
+  git push origin $localBranch
+  echo -e "【开始合并】"
+  mergeBranch $localBranch $tagetBranch
   exit
 fi
-
 
 if [[ $1 == "pm" ]];then
   git pull origin master
