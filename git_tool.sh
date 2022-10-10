@@ -29,23 +29,36 @@ function help() {
   echo "ac  eg:gg ac A Create       将当前目录下所有git包切到指定分支, Create  = 1 时新建分支"
 }
 
+# 当前目录名
+function nowDirNameName() {
+  echo `pwd | awk -F "/" '{print $NF}'`
+}
+
 # 切换到deploy-test-branch
 function pushDeploy() {
     if [[  ! -d '.git' ]];then
       echo -e  "\033[35m[当前不是git仓库]\033[0m"
       exit
     fi
-    if [[ `gitBranch` == "deploy-test-branch" ]];then
+
+    localDirName=`nowDirNameName`
+    if [[ $localDirName == 'frontend' ]];then
+      deployBranch='develop'
+    else
+      deployBranch='deploy-test-branch'
+    fi
+
+    if [[ `gitBranch` == "deploy-test-branch" || `gitBranch` == 'develop' ]];then
       echo -e  "\033[35m[当前在deploy分支]\033[0m"
       exit
     fi
-
     if [[ `gitBranch` != $1 ]];then
           echo -e "\033[36m【 当前分支`gitBranch` 】\033[0m"
           echo -e "\033[36m【 git commit -m提交改动 -a 】\033[0m"
           branch=$1
           git commit -m"更新分支逻辑" -a  >> /dev/null 2>&1
           echo -e "\033[36m【 git push origin `gitBranch`  】\033[0m"
+          # shellcheck disable=SC2046
           git push origin `gitBranch` >> /dev/null 2>&1
           git checkout $1 >> /dev/null 2>&1
     fi
@@ -60,14 +73,14 @@ function pushDeploy() {
     echo -e "\033[36m【 避免出错：sleep 2 】\033[0m"
     sleep 2
     echo
-    echo -e "\033[36m【  git checkout deploy-test-branch  】\033[0m"
-    git checkout deploy-test-branch  >> /dev/null 2>&1
+    echo -e "\033[36m【  git checkout $deployBranch  】\033[0m"
+    git checkout $deployBranch  >> /dev/null 2>&1
     echo -e "\033[36m【 git pull 】\033[0m"
     git pull
     echo -e "\033[36m【 git pull origin $branch  】\033[0m"
     git pull origin $branch
-    echo -e "\033[36m【 git push origin deploy-test-branch 】\033[0m"
-    git push origin deploy-test-branch  >> /dev/null 2>&1
+    echo -e "\033[36m【 git push origin $deployBranch 】\033[0m"
+    git push origin $deployBranch  >> /dev/null 2>&1
     echo -e "\033[36m【 git checkout $branch  】\033[0m"
     git checkout $branch  >> /dev/null 2>&1
     echo -e "\033[32m【 合并成功 】\033[0m"
