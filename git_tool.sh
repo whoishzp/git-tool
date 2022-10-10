@@ -309,6 +309,7 @@ if [[ $1 == 'c' ]]; then
      exit
   fi
   echo -e "\033[35m【 开始 】\033[0m"
+  echo -e "\033[35m【 当前分支：$localBranch 】\033[0m"
   echo -e "\033[36m【 git commit -m '提交改动' *  】\033[0m"
   git commit -m "提交改动" *   >> /dev/null 2>&1
   echo -e "\033[36m【 git push origin $localBranch  】\033[0m"
