@@ -81,7 +81,7 @@ function freshMaster() {
     fi
     # shellcheck disable=SC2045
     for name in `ls`; do
-      if [[ $name == 'git-tool' ]]; then
+      if [[ $name == 'git-tool' || $name == 'www-frontend' || $name == 'aide' || $name == 'package' || $name == 'report' || $name == 'test-gee' || $name == 'test-cut' ]]; then
         continue
       fi
       if [ -d $name ];then
