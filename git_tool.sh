@@ -30,9 +30,8 @@ function help() {
 }
 
 # 当前目录名
-function nowDirName() {
-  # shellcheck disable=SC2046
-  return `pwd | awk -F "/" '{print $NF}'`
+function nowDirNameName() {
+  echo `pwd | awk -F "/" '{print $NF}'`
 }
 
 # 切换到deploy-test-branch
@@ -41,12 +40,14 @@ function pushDeploy() {
       echo -e  "\033[35m[当前不是git仓库]\033[0m"
       exit
     fi
-    nowDirName=`nowDirName`
-    if [[ $nowDirName == 'frontend' ]];then
+
+    localDirName=`nowDirNameName`
+    if [[ $localDirName == 'frontend' ]];then
       deployBranch='develop'
     else
       deployBranch='deploy-test-branch'
     fi
+
     if [[ `gitBranch` == "deploy-test-branch" || `gitBranch` == 'develop' ]];then
       echo -e  "\033[35m[当前在deploy分支]\033[0m"
       exit
