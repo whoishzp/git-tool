@@ -124,6 +124,7 @@ function allChangeBranch() {
           function switchBranch() {
              echo -e "\033[35m【 切到分支：$1 】\033[0m"
              echo -e "\033[36m【 执行：git pull origin $1 && git pull origin master && git push origin $1 】\033[0m"
+             git checkout $1
              git pull origin $1
              git pull origin master
              git push origin $1  >> /dev/null 2>&1
