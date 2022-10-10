@@ -20,6 +20,7 @@ function help() {
   echo "msg  eg:gg msg [commit msg] 提交当前分支并提交到远程分支"
   echo "m    eg:gg m                当前是git仓库，跳到上一层。当前不是git仓库，会将当前目录下所有git项目切到master并拉最新代码"
   echo "mb   eg:gg mb [A] [B]       合并A分支到B"
+  echo "mt   eg:gg mt [B]           合并当前分支到分支到B"
   echo "pm   eg:gg pm               pull origin master"
   echo "c    eg:gg c [branch]       git checkout branch"
   echo "mf   eg:gg mf [className]   自动创建类,并追加ctx"
@@ -148,6 +149,9 @@ function mergeBranch() {
       color=$[RANDOM%7 + 31]
       echo -e  "\033[${color}m[提交当前分支]\033[0m 开始"
       branch=$1
+      if [[ `gitBranch` != $branch ]];then
+        echo -e "\033[${color}m[当前分支不对]\033[0m 当前分支[`gitBranch`],需要合并的来源分支[{$branch}]"
+      fi
       git commit -m"更新分支逻辑" -a
       git push origin $branch
       echo -e  "\033[${color}m[提交当前分支]\033[0m 结束"
@@ -228,6 +232,20 @@ fi
 
 if [[ $1 == 'mb' ]];then
   if [[ $2 == "" ]];then
+    echo "请输入分支: gg mb [from branch]"
+    exit
+  fi
+  # shellcheck disable=SC2046
+  tagetBranch=$3
+  if [[ $tagetBranch == "" ]];then
+    tagetBranch=`gitBranch`
+  fi
+  mergeBranch $2 $tagetBranch
+  exit
+fi
+
+if [[ $1 == 'mt' ]];then
+  if [[ $2 == "" ]];then
     echo "请输出分支: gg mb [from branch]"
     exit
   fi
@@ -239,6 +257,7 @@ if [[ $1 == 'mb' ]];then
   mergeBranch $2 $tagetBranch
   exit
 fi
+
 
 if [[ $1 == "pm" ]];then
   git pull origin master
