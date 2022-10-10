@@ -272,14 +272,27 @@ if [[ $1 == "pm" ]];then
 fi
 
 if [[ $1 == 'c' ]]; then
+  localBranch=`gitBranch`
   if [[ $2 == "" ]];then
-     git checkout master
+     git commit -m "提交改动" *
      git pull origin master
+     git push origin $localBranch
      exit
   fi
-  git checkout $2
-  git pull origin $2
+  echo -e "\033[35m======================【开始】=====================\033[0m"
+  echo -e "\033[35m======================【提交当前分支改动：{$localBranch}】=====================\033[0m"
   git pull origin master
+  git commit -m "提交改动" *
+  git push origin $localBranch
+  echo -e "\033[35m======================【切换分支到分支：{$2}】=====================\033[0m"
+  git checkout $2
+  echo -e "\033[35m======================【拉远程数据分支数据】=====================\033[0m"
+  git pull origin $2
+  echo -e "\033[35m======================【合并master最新数据】=====================\033[0m"
+  git pull origin master
+  echo -e "\033[35m======================【推改动到远程分支：{$2}】=====================\033[0m"
+  git push origin $2
+  echo -e "\033[35m======================【结束】=====================\033[0m"
   exit
 fi
 
