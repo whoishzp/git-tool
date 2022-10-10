@@ -43,21 +43,22 @@ function pushDeploy() {
     echo -e "\033[36m【git commit -m提交改动 -a】\033[0m"
     branch=$1
     git commit -m"更新分支逻辑" -a  >> /dev/null 2>&1
-    echo -e "\033[36m【git push origin $branch】\033[0m"
+    echo -e "\033[36m【git push origin {$branch}】\033[0m"
     git push origin $branch
     color=$[RANDOM%7 + 31]
     echo
     echo -e "\033[36m【避免出错：sleep 2】\033[0m"
     sleep 2
+    echo
     echo -e "\033[36m【git checkout deploy-test-branch】\033[0m"
     git checkout deploy-test-branch  >> /dev/null 2>&1
     echo -e "\033[36m【git pull】\033[0m"
     git pull  >> /dev/null 2>&1
-    echo -e "\033[36m【git pull origin $branch】\033[0m"
+    echo -e "\033[36m【git pull origin {$branch}】\033[0m"
     git pull origin $branch  >> /dev/null 2>&1
     echo -e "\033[36m【git push origin deploy-test-branch】\033[0m"
     git push origin deploy-test-branch  >> /dev/null 2>&1
-    echo -e "\033[36m【git checkout $branch】\033[0m"
+    echo -e "\033[36m【git checkout {$branch}】\033[0m"
     git checkout $branch  >> /dev/null 2>&1
     echo -e "\033[32m【合并成功】\033[0m"
 }
