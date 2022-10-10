@@ -30,14 +30,14 @@ function help() {
 
 function pushDeploy() {
     if [[  ! -d '.git' ]];then
-      echo -e  "\033[31m[当前不是git仓库]\033[0m"
+      echo -e  "\033[35m[当前不是git仓库]\033[0m"
       exit
     fi
     if [[ `gitBranch` == "deploy-test-branch" ]];then
-      echo -e  "\033[31m[当前在deploy分支]\033[0m"
+      echo -e  "\033[35m[当前在deploy分支]\033[0m"
       exit
     fi
-    echo -e  "\033[31m[来源分支]$1\033[0m "
+    echo -e  "\033[35m[来源分支]$1\033[0m "
 
     color=$[RANDOM%7 + 31]
     echo -e  "\033[${color}m[提交当前分支]\033[0m 开始"
@@ -76,7 +76,7 @@ function freshMaster() {
            pullMaster
            echo -e  "\033[${color}m[$name]\033[0m 处理完成"
         else
-          echo -e  "\033[31m[$name]\033[0m 不是git仓库"
+          echo -e  "\033[35m[$name]\033[0m 不是git仓库"
         fi
         echo
         
@@ -135,18 +135,18 @@ function allChangeBranch() {
 
 function mergeBranch() {
   if [[  ! -d '.git' ]];then
-        echo -e  "\033[31m[当前不是git仓库]\033[0m 退出"
+        echo -e  "\033[35m[当前不是git仓库]\033[0m 退出"
         exit
       fi
       # shellcheck disable=SC2053
       if [[ `gitBranch` == $2 ]];then
-        echo -e  "\033[31m[当前是${2}分支]开始合并 ${1}\033[0m "
+        echo -e  "\033[35m[当前是${2}分支]开始合并 ${1}\033[0m "
         git pull origin $1  >> /dev/null 2>&1
         git push origin $2
-        echo -e  "\033[31m[当前是${2}分支]合并结束\033[0m "
+        echo -e  "\033[35m[当前是${2}分支]合并结束\033[0m "
         exit
       fi
-      echo -e  "\033[31m[当前分支] $1\033[0m"
+      echo -e  "\033[35m[当前分支] $1\033[0m"
       color=$[RANDOM%7 + 31]
       echo -e  "\033[${color}m[提交当前分支]开始\033[0m "
       branch=$1
@@ -199,7 +199,7 @@ if [[ $1 == 'now' ]];then
           if [ -d $name ];then
             cd $name || echo "$name 不存在"
             if [[  -d '.git'  ]];then
-              echo -e  "$name\033[31m[`gitBranch`]\033[0m"
+              echo -e  "$name\033[35m[`gitBranch`]\033[0m"
             else
               cd ../
               continue
@@ -226,7 +226,7 @@ if [[ $1 == 'nb' ]];then
 fi
 
 if [[ $1 == 'msg' ]];then
-  echo -e "\033[31m【开始提交】\033[0m"
+  echo -e "\033[35m【开始提交】\033[0m"
   echo -e "\033[36m【git commit -m"$2" -a】\033[0m"
   git commit -m"$2" -a  >> /dev/null 2>&1
  echo -e "\033[36m【git pull origin master】\033[0m"
@@ -285,7 +285,7 @@ fi
 if [[ $1 == 'c' ]]; then
   localBranch=`gitBranch`
   if [[ $2 == "" ]];then
-     echo -e "\033[31m【开始提交】\033[0m"
+     echo -e "\033[35m【开始提交】\033[0m"
      echo -e "\033[36m【git commit -m 提交改动 *】\033[0m"
      git commit -m "提交改动" *
      echo -e "\033[36m【git pull origin master】\033[0m"
@@ -295,7 +295,7 @@ if [[ $1 == 'c' ]]; then
      echo -e "\033[32m【提交结束】\033[0m"
      exit
   fi
-  echo -e "\033[31m【开始】\033[0m"
+  echo -e "\033[35m【开始】\033[0m"
   echo -e "\033[36m【git push origin $localBranch】\033[0m"
   git pull origin master
   git commit -m "提交改动" *
