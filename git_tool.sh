@@ -37,15 +37,23 @@ function pushDeploy() {
       echo -e  "\033[35m[当前在deploy分支]\033[0m"
       exit
     fi
+
+    if [[ `gitBranch` != $1 ]];then
+          echo -e "\033[36m【当前分支`gitBranch`】\033[0m"
+          echo -e "\033[36m【git commit -m提交改动 -a】\033[0m"
+          branch=$1
+          git commit -m"更新分支逻辑" -a  >> /dev/null 2>&1
+          echo -e "\033[36m【git push origin `gitBranch` 】\033[0m"
+          git push origin `gitBranch` >> /dev/null 2>&1
+          git checkout $1 >> /dev/null 2>&1
+    fi
+
     echo -e "\033[35m【开始合并】\033[0m"
-    echo -e "\033[36m【当前分支`gitBranch`】\033[0m"
-    color=$[RANDOM%7 + 31]
     echo -e "\033[36m【git commit -m提交改动 -a】\033[0m"
     branch=$1
     git commit -m"更新分支逻辑" -a  >> /dev/null 2>&1
     echo -e "\033[36m【git push origin $branch 】\033[0m"
     git push origin $branch
-    color=$[RANDOM%7 + 31]
     echo
     echo -e "\033[36m【避免出错：sleep 2】\033[0m"
     sleep 2
