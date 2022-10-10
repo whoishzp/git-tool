@@ -65,7 +65,7 @@ function pushDeploy() {
     echo -e "\033[36m【 git pull 】\033[0m"
     git pull  >> /dev/null 2>&1
     echo -e "\033[36m【 git pull origin $branch  】\033[0m"
-    git pull origin $branch  >> /dev/null 2>&1
+    git pull origin $branch
     echo -e "\033[36m【 git push origin deploy-test-branch 】\033[0m"
     git push origin deploy-test-branch  >> /dev/null 2>&1
     echo -e "\033[36m【 git checkout $branch  】\033[0m"
@@ -124,8 +124,8 @@ function allChangeBranch() {
           function switchBranch() {
              echo -e "\033[35m【 切到分支：$1 】\033[0m"
              echo -e "\033[36m【 执行：git pull origin $1 && git pull origin master && git push origin $1 】\033[0m"
-             git pull origin $1   >> /dev/null 2>&1
-             git pull origin master   >> /dev/null 2>&1
+             git pull origin $1
+             git pull origin master
              git push origin $1  >> /dev/null 2>&1
           }
           # 在当前分支
@@ -148,7 +148,7 @@ function allChangeBranch() {
              echo -e "\033[36m【 分支不存在，新建分支：$1 】\033[0m"
              echo -e "\033[36m【 git checkout master && git pull origin master && git checkout -b $1 && git push origin $1 】\033[0m"
              git checkout master   >> /dev/null 2>&1
-             git pull origin master   >> /dev/null 2>&1
+             git pull origin master 
              git checkout -b $1   >> /dev/null 2>&1
              git push origin $1   >> /dev/null 2>&1
              echo -e "\033[32m【 目录处理成功：$name 】\033[0m"
@@ -192,7 +192,7 @@ function mergeBranch() {
       # shellcheck disable=SC2053
       if [[ `gitBranch` == $2 ]];then
         echo -e  "\033[35m[当前是${2}分支]开始合并 ${1}\033[0m "
-        git pull origin $1  >> /dev/null 2>&1
+        git pull origin $1
         git push origin $2
         echo -e  "\033[35m[当前是${2}分支]合并结束\033[0m "
         exit
@@ -283,7 +283,7 @@ if [[ $1 == 'msg' ]];then
   echo -e "\033[36m【 git commit -m"$2" -a 】\033[0m"
   git commit -m"$2" -a  >> /dev/null 2>&1
  echo -e "\033[36m【 git pull origin master 】\033[0m"
- git pull origin master >> /dev/null 2>&1
+ git pull origin master
   # shellcheck disable=SC2046
   echo -e "\033[36m【 git push origin `gitBranch` 】\033[0m"
   git push origin `gitBranch`
@@ -354,7 +354,7 @@ if [[ $1 == 'c' ]]; then
      echo -e "\033[36m【 git commit -m 提交改动 * 】\033[0m"
      git commit -m "提交改动" *   >> /dev/null 2>&1
      echo -e "\033[36m【 git pull origin master 】\033[0m"
-     git pull origin master   >> /dev/null 2>&1
+     git pull origin master 
      if [[ $localBranch != 'master' ]];then
        echo -e "\033[36m【 git push origin $localBranch 】\033[0m"
        git push origin $localBranch
@@ -370,7 +370,7 @@ if [[ $1 == 'c' ]]; then
   echo -e "\033[36m【 git pull origin $2 】\033[0m"
   git pull origin $2   >> /dev/null 2>&1
   echo -e "\033[36m【 git pull origin master 】\033[0m"
-  git pull origin master   >> /dev/null 2>&1
+  git pull origin master 
   echo -e "\033[36m【 git push origin $2 】\033[0m"
   git push origin $2   >> /dev/null 2>&1
   echo -e "\033[32m【 切换分支成功 】\033[0m"
