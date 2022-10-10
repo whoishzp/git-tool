@@ -42,7 +42,7 @@ function pushDeploy() {
     color=$[RANDOM%7 + 31]
     echo -e  "\033[${color}m[提交当前分支]\033[0m 开始"
     branch=$1
-    git commit -m"更新分支逻辑" -a
+    git commit -m"更新分支逻辑" -a  >> /dev/null 2>&1
     git push origin $branch
     echo -e  "\033[${color}m[提交当前分支]\033[0m 结束"
     color=$[RANDOM%7 + 31]
@@ -50,11 +50,11 @@ function pushDeploy() {
     echo -e  "\033[${color}m[合并deploy]\033[0m 等待中"
     sleep 3
     echo -e  "\033[${color}m[合并deploy]\033[0m 等待结束"
-    git checkout deploy-test-branch
-    git pull
-    git pull origin $branch
-    git push origin deploy-test-branch
-    git checkout $branch
+    git checkout deploy-test-branch  >> /dev/null 2>&1
+    git pull  >> /dev/null 2>&1
+    git pull origin $branch  >> /dev/null 2>&1
+    git push origin deploy-test-branch  >> /dev/null 2>&1
+    git checkout $branch  >> /dev/null 2>&1
     echo -e  "\033[${color}m[合并deploy]\033[0m 结束"
 }
 
@@ -141,7 +141,7 @@ function mergeBranch() {
       # shellcheck disable=SC2053
       if [[ `gitBranch` == $2 ]];then
         echo -e  "\033[31m=====================[当前是${2}分支]开始合并 ${1}=====================\033[0m "
-        git pull origin $1
+        git pull origin $1  >> /dev/null 2>&1
         git push origin $2
         echo -e  "\033[31m=====================[当前是${2}分支]合并结束=====================\033[0m "
         exit
@@ -154,17 +154,22 @@ function mergeBranch() {
         echo -e "\033[${color}m=====================[当前分支不对] 当前分支[`gitBranch`],需要合并的来源分支[{$branch}]=====================\033[0m"
         exit
       fi
-      git commit -m"更新分支逻辑" -a
+      echo -e "\033[36m======================【git commit -m"更新分支逻辑" -a】=====================\033[0m"
+      git commit -m"更新分支逻辑" -a  >> /dev/null 2>&1
       git push origin $branch
       echo -e  "\033[${color}m=====================[提交当前分支] 结束=====================\033[0m"
       color=$[RANDOM%7 + 31]
       echo
-      echo -e  "\033[${color}m=====================[合并到${2}]开始=====================\033[0m "
-      git checkout $2
-      git pull
+      echo -e "\033[36m======================【git checkout $2】=====================\033[0m"
+      git checkout $2  >> /dev/null 2>&1
+      echo -e "\033[36m======================【git pull】=====================\033[0m"
+      git pull  >> /dev/null 2>&1
+      echo -e "\033[36m======================【git pull origin $branch】=====================\033[0m"
       git pull origin $branch
-      git push origin $2
-      git checkout $branch
+      echo -e "\033[36m======================【git push origin $2】=====================\033[0m"
+      git push origin $2  >> /dev/null 2>&1
+      echo -e "\033[36m======================【git checkout $branch】=====================\033[0m"
+      git checkout $branch  >> /dev/null 2>&1
       echo -e  "\033[${color}m=====================[合并到${2}]结束=====================\033[0m "
 }
 
@@ -223,11 +228,11 @@ fi
 if [[ $1 == 'msg' ]];then
   echo -e "\033[31m======================【开始提交】=====================\033[0m"
   echo -e "\033[36m======================【git commit -m"$2" -a】=====================\033[0m"
-  git commit -m"$2" -a
+  git commit -m"$2" -a  >> /dev/null 2>&1
  echo -e "\033[36m======================【git pull origin master】=====================\033[0m"
  git pull origin master >> /dev/null 2>&1
   # shellcheck disable=SC2046
-  echo -e "\033[36m======================【 git push origin `gitBranch`】=====================\033[0m"
+  echo -e "\033[36m======================【git push origin `gitBranch`】=====================\033[0m"
   git push origin `gitBranch`
   echo -e "\033[32m======================【提交成功】=====================\033[0m"
   exit
@@ -265,7 +270,7 @@ if [[ $1 == 'mt' ]];then
   targetBranch=$2
   localBranch=`gitBranch`
   echo -e "\033[35m=====================【初始化】=====================\033[0m"
-  git commit -m"提交改动" *
+  git commit -m"提交改动" *  >> /dev/null 2>&1
   git push origin $localBranch
   echo -e "\033[35m======================【开始合并】=====================\033[0m"
   mergeBranch $localBranch $tagetBranch
