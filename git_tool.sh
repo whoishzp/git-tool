@@ -31,7 +31,7 @@ function help() {
 
 # 当前目录名
 function nowDirNameName() {
-  echo `pwd | awk -F "/" '{print $NF}'`
+   pwd | awk -F "/" '{print $NF}'
 }
 
 # 切换到deploy-test-branch
