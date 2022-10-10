@@ -275,11 +275,11 @@ if [[ $1 == 'c' ]]; then
   localBranch=`gitBranch`
   if [[ $2 == "" ]];then
      echo -e "\033[31m======================【开始提交】=====================\033[0m"
-     echo -e "\033[33m======================【git commit -m 提交改动 *】=====================\033[0m"
+     echo -e "\033[36m======================【git commit -m 提交改动 *】=====================\033[0m"
      git commit -m "提交改动" *
-     echo -e "\033[33m======================【git pull origin master】=====================\033[0m"
+     echo -e "\033[36m======================【git pull origin master】=====================\033[0m"
      git pull origin master
-     echo -e "\033[33m======================【git push origin $localBranch】=====================\033[0m"
+     echo -e "\033[36m======================【git push origin $localBranch】=====================\033[0m"
      git push origin $localBranch
      echo -e "\033[32m======================【提交结束】=====================\033[0m"
      exit
