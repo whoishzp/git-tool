@@ -303,17 +303,21 @@ if [[ $1 == 'c' ]]; then
      git commit -m "提交改动" *   >> /dev/null 2>&1
      echo -e "\033[36m【 git pull origin master 】\033[0m"
      git pull origin master   >> /dev/null 2>&1
-     echo -e "\033[36m【 git push origin $localBranch 】\033[0m"
-     git push origin $localBranch
+     if [[ $localBranch != 'master' ]];then
+       echo -e "\033[36m【 git push origin $localBranch 】\033[0m"
+       git push origin $localBranch
+     fi
      echo -e "\033[32m【 提交结束 】\033[0m"
      exit
   fi
   echo -e "\033[35m【 开始 】\033[0m"
   echo -e "\033[35m【 当前分支：$localBranch 】\033[0m"
-  echo -e "\033[36m【 git commit -m '提交改动' *  】\033[0m"
-  git commit -m "提交改动" *   >> /dev/null 2>&1
-  echo -e "\033[36m【 git push origin $localBranch  】\033[0m"
-  git push origin $localBranch
+  if [[ $localBranch != 'master' ]];then
+       echo -e "\033[36m【 git commit -m '提交改动' *  】\033[0m"
+       git commit -m "提交改动" *   >> /dev/null 2>&1
+       echo -e "\033[36m【 git push origin $localBranch  】\033[0m"
+       git push origin $localBranch
+  fi
   echo -e "\033[36m【 git checkout $2 】\033[0m"
   git checkout $2   >> /dev/null 2>&1
   echo -e "\033[36m【 git pull origin $2 】\033[0m"
