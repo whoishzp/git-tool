@@ -30,14 +30,15 @@ function help() {
 
 function pushDeploy() {
     if [[  ! -d '.git' ]];then
-      echo -e  "\033[31m[当前不是git仓库]\033[0m 退出"
+      echo -e  "\033[31m=====================[当前不是git仓库]=====================\033[0m"
       exit
     fi
     if [[ `gitBranch` == "deploy-test-branch" ]];then
-      echo -e  "\033[31m[当前在deploy分支]\033[0m 退出"
+      echo -e  "\033[31m=====================[当前在deploy分支]=====================\033[0m"
       exit
     fi
-    echo -e  "\033[31m[当前分支]\033[0m $1"
+    echo -e  "\033[31m=====================[来源分支]$1=====================\033[0m "
+
     color=$[RANDOM%7 + 31]
     echo -e  "\033[${color}m[提交当前分支]\033[0m 开始"
     branch=$1
