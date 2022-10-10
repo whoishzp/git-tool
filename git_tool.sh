@@ -221,9 +221,15 @@ if [[ $1 == 'nb' ]];then
 fi
 
 if [[ $1 == 'msg' ]];then
-  git commit -m"$2" -a 
+  echo -e "\033[31m======================【开始提交】=====================\033[0m"
+  echo -e "\033[36m======================【git commit -m"$2" -a】=====================\033[0m"
+  git commit -m"$2" -a
+ echo -e "\033[36m======================【git pull origin master】=====================\033[0m"
+ git pull origin master >> /dev/null 2>&1
   # shellcheck disable=SC2046
+  echo -e "\033[36m======================【 git push origin `gitBranch`】=====================\033[0m"
   git push origin `gitBranch`
+  echo -e "\033[32m======================【提交成功】=====================\033[0m"
   exit
 fi
 
