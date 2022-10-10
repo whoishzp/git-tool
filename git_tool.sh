@@ -20,6 +20,7 @@ function help() {
   echo "msg  eg:gg msg [commit msg] 提交当前分支并提交到远程分支"
   echo "m    eg:gg m                当前是git仓库，跳到上一层。当前不是git仓库，会将当前目录下所有git项目切到master并拉最新代码"
   echo "mb   eg:gg mb [A] [B]       合并A分支到B"
+  echo "mt   eg:gg mt [B]           合并当前分支到分支到B"
   echo "pm   eg:gg pm               pull origin master"
   echo "c    eg:gg c [branch]       git checkout branch"
   echo "mf   eg:gg mf [className]   自动创建类,并追加ctx"
@@ -138,28 +139,32 @@ function mergeBranch() {
       fi
       # shellcheck disable=SC2053
       if [[ `gitBranch` == $2 ]];then
-        echo -e  "\033[31m[当前是${2}分支]\033[0m 开始合并 ${1}"
+        echo -e  "\033[31m=====================[当前是${2}分支]开始合并 ${1}=====================\033[0m "
         git pull origin $1
         git push origin $2
-        echo -e  "\033[31m[当前是${2}分支]\033[0m 合并结束"
+        echo -e  "\033[31m=====================[当前是${2}分支]合并结束=====================\033[0m "
         exit
       fi
-      echo -e  "\033[31m[当前分支]\033[0m $1"
+      echo -e  "\033[31m=====================[当前分支] $1=====================\033[0m"
       color=$[RANDOM%7 + 31]
-      echo -e  "\033[${color}m[提交当前分支]\033[0m 开始"
+      echo -e  "\033[${color}m=====================[提交当前分支]开始=====================\033[0m "
       branch=$1
+      if [[ `gitBranch` != $branch ]];then
+        echo -e "\033[${color}m=====================[当前分支不对] 当前分支[`gitBranch`],需要合并的来源分支[{$branch}]=====================\033[0m"
+        exit
+      fi
       git commit -m"更新分支逻辑" -a
       git push origin $branch
-      echo -e  "\033[${color}m[提交当前分支]\033[0m 结束"
+      echo -e  "\033[${color}m=====================[提交当前分支] 结束=====================\033[0m"
       color=$[RANDOM%7 + 31]
       echo
-      echo -e  "\033[${color}m[合并到${2}]\033[0m 开始"
+      echo -e  "\033[${color}m=====================[合并到${2}]开始=====================\033[0m "
       git checkout $2
       git pull
       git pull origin $branch
       git push origin $2
       git checkout $branch
-      echo -e  "\033[${color}m[合并到${2}]\033[0m 结束"
+      echo -e  "\033[${color}m=====================[合并到${2}]结束=====================\033[0m "
 }
 
 if [[ $1 == "d" ]]; then
@@ -227,8 +232,10 @@ if  [[ $1 == "m" ]];then
 fi
 
 if [[ $1 == 'mb' ]];then
+  echo -e "\033[35m=====================【请使用gg mt [target branch]】=====================\033[0m"
+  exit
   if [[ $2 == "" ]];then
-    echo "请输出分支: gg mb [from branch]"
+    echo "请输入分支: gg mb [from branch]"
     exit
   fi
   # shellcheck disable=SC2046
@@ -236,7 +243,25 @@ if [[ $1 == 'mb' ]];then
   if [[ $tagetBranch == "" ]];then
     tagetBranch=`gitBranch`
   fi
+  git commit -m "合并前先提交" *
+  git push origin `gitBranch`
   mergeBranch $2 $tagetBranch
+  exit
+fi
+
+if [[ $1 == 'mt' ]];then
+  if [[ $2 == "" ]];then
+    echo "请输入分支: gg mt [Target Branch]"
+    exit
+  fi
+  # shellcheck disable=SC2046
+  targetBranch=$2
+  localBranch=`gitBranch`
+  echo -e "\033[35m=====================【初始化】=====================\033[0m"
+  git commit -m"提交改动" *
+  git push origin $localBranch
+  echo -e "\033[35m======================【开始合并】=====================\033[0m"
+  mergeBranch $localBranch $tagetBranch
   exit
 fi
 
