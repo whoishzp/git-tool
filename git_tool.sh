@@ -283,7 +283,7 @@ if [[ $1 == 'msg' ]];then
   echo -e "\033[36m【 git commit -m"$2" -a 】\033[0m"
   git commit -m"$2" -a  >> /dev/null 2>&1
  echo -e "\033[36m【 git pull origin master 】\033[0m"
- git pull origin master
+ git pull origin master >> /dev/null 2>&1
   # shellcheck disable=SC2046
   echo -e "\033[36m【 git push origin `gitBranch` 】\033[0m"
   git push origin `gitBranch`
