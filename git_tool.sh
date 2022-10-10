@@ -155,16 +155,16 @@ function mergeBranch() {
       fi
       git commit -m"更新分支逻辑" -a
       git push origin $branch
-      echo -e  "\033[${color}m=====================[提交当前分支]\033[0m 结束====================="
+      echo -e  "\033[${color}m=====================[提交当前分支] 结束=====================\033[0m"
       color=$[RANDOM%7 + 31]
       echo
-      echo -e  "\033[${color}m=====================[合并到${2}]\033[0m 开始====================="
+      echo -e  "\033[${color}m=====================[合并到${2}]开始=====================\033[0m "
       git checkout $2
       git pull
       git pull origin $branch
       git push origin $2
       git checkout $branch
-      echo -e  "\033[${color}m=====================[合并到${2}]\033[0m 结束====================="
+      echo -e  "\033[${color}m=====================[合并到${2}]结束=====================\033[0m "
 }
 
 if [[ $1 == "d" ]]; then
