@@ -78,7 +78,7 @@ function pushDeploy() {
     echo -e "\033[36m【 git pull 】\033[0m"
     git pull
     echo -e "\033[36m【 git pull origin $branch  】\033[0m"
-    git pull origin $branch
+    `gitBranch` != 'master' && git pull origin $branch
     echo -e "\033[36m【 git push origin $deployBranch 】\033[0m"
     git push origin $deployBranch  >> /dev/null 2>&1
     echo -e "\033[36m【 git checkout $branch  】\033[0m"
@@ -138,7 +138,7 @@ function allChangeBranch() {
              echo -e "\033[35m【 切到分支：$1 】\033[0m"
              echo -e "\033[36m【 执行：git pull origin $1 && git pull origin master && git push origin $1 】\033[0m"
              git checkout $1
-             git pull origin $1
+             `gitBranch` != 'master' && git pull origin $1
              git pull origin master
              git push origin $1  >> /dev/null 2>&1
           }
@@ -206,7 +206,7 @@ function mergeBranch() {
       # shellcheck disable=SC2053
       if [[ `gitBranch` == $2 ]];then
         echo -e  "\033[35m[当前是${2}分支]开始合并 ${1}\033[0m "
-        git pull origin $1
+        `gitBranch` != 'master' && git pull origin $1
         git push origin $2
         echo -e  "\033[35m[当前是${2}分支]合并结束\033[0m "
         exit
@@ -230,7 +230,7 @@ function mergeBranch() {
       echo -e "\033[36m【 git pull 】\033[0m"
       git pull
       echo -e "\033[36m【 git pull origin $branch 】\033[0m"
-      git pull origin $branch
+      `gitBranch` != 'master' && git pull origin $branch
       echo -e "\033[36m【 git push origin $2 】\033[0m"
       git push origin $2  >> /dev/null 2>&1
       echo -e "\033[36m【 git checkout $branch 】\033[0m"
@@ -265,6 +265,7 @@ if [[ $1 == 'now' ]];then
             cd $name || echo "$name 不存在"
             if [[  -d '.git'  ]];then
               echo -e  "$name\033[35m[`gitBranch`]\033[0m"
+              git status
             else
               cd ../
               continue
@@ -382,7 +383,7 @@ if [[ $1 == 'c' ]]; then
   echo -e "\033[36m【 git checkout $2 】\033[0m"
   git checkout $2   >> /dev/null 2>&1
   echo -e "\033[36m【 git pull origin $2 】\033[0m"
-  git pull origin $2
+  `gitBranch` != 'master' && git pull origin $2
   echo -e "\033[36m【 git pull origin master 】\033[0m"
   git pull origin master 
   echo -e "\033[36m【 git push origin $2 】\033[0m"
