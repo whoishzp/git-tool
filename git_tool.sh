@@ -137,8 +137,11 @@ function allChangeBranch() {
           function switchBranch() {
              echo -e "\033[35m【 切到分支：$1 】\033[0m"
              echo -e "\033[36m【 执行：git pull origin $1 && git pull origin master && git push origin $1 】\033[0m"
+             localBranchIn=`gitBranch`
              git checkout $1
-             git pull origin $1
+             if [[ $localBranchIn != 'master' ]];then
+                 git pull origin $1
+             fi
              git pull origin master
              git push origin $1  >> /dev/null 2>&1
           }
@@ -230,7 +233,10 @@ function mergeBranch() {
       echo -e "\033[36m【 git pull 】\033[0m"
       git pull
       echo -e "\033[36m【 git pull origin $branch 】\033[0m"
-      git pull origin $branch
+      nowLocalBranch=`gitBranch`
+      if [[ $nowLocalBranch != 'master' ]];then
+        git pull origin $branch
+      fi
       echo -e "\033[36m【 git push origin $2 】\033[0m"
       git push origin $2  >> /dev/null 2>&1
       echo -e "\033[36m【 git checkout $branch 】\033[0m"
@@ -383,7 +389,10 @@ if [[ $1 == 'c' ]]; then
   echo -e "\033[36m【 git checkout $2 】\033[0m"
   git checkout $2   >> /dev/null 2>&1
   echo -e "\033[36m【 git pull origin $2 】\033[0m"
-  git pull origin $2
+  nowLocalBranch=`gitBranch`
+  if [[ $nowLocalBranch != 'master' ]];then
+     git pull origin $2
+  fi
   echo -e "\033[36m【 git pull origin master 】\033[0m"
   git pull origin master 
   echo -e "\033[36m【 git push origin $2 】\033[0m"
