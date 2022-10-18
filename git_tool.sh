@@ -214,7 +214,7 @@ function mergeBranch() {
         echo -e  "\033[35m[当前是${2}分支]合并结束\033[0m "
         exit
       fi
-      echo -e  "\033[35m[当前分支] $1\033[0m"
+      echo -e  "\033[35m[当前分支] $1 \033[0m"
       color=$[RANDOM%7 + 31]
       echo -e  "\033[${color}m[提交当前分支]开始\033[0m "
       branch=$1
@@ -222,7 +222,7 @@ function mergeBranch() {
         echo -e "\033[${color}m[当前分支不对] 当前分支[`gitBranch`],需要合并的来源分支[$branch ]\033[0m"
         exit
       fi
-      echo -e "\033[36m【 git commit -m"更新分支逻辑" -a 】\033[0m"
+      echo -e "\033[36m【 git commit -m\"更新分支逻辑\" -a 】\033[0m"
       git commit -m"更新分支逻辑" -a  >> /dev/null 2>&1
       git push origin $branch
       echo -e  "\033[${color}m[提交当前分支] 结束\033[0m"
@@ -230,8 +230,8 @@ function mergeBranch() {
       echo
       echo -e "\033[36m【 git checkout $2 】\033[0m"
       git checkout $2  >> /dev/null 2>&1
-      echo -e "\033[36m【 git pull 】\033[0m"
-      git pull
+      echo -e "\033[36m【 git pull  】\033[0m"
+      git pull origin $2
       echo -e "\033[36m【 git pull origin $branch 】\033[0m"
       nowLocalBranch=`gitBranch`
       if [[ $nowLocalBranch != 'master' ]];then
@@ -343,11 +343,11 @@ if [[ $1 == 'mt' ]];then
   # shellcheck disable=SC2046
   targetBranch=$2
   localBranch=`gitBranch`
-  echo -e "\033[35m【 初始化 】\033[0m"
+  echo -e "\033[35m【 git commit -m"提交改动" *  】\033[0m"
   git commit -m"提交改动" *  >> /dev/null 2>&1
   git push origin $localBranch
-  echo -e "\033[35m【 开始合并 】\033[0m"
-  mergeBranch $localBranch $tagetBranch
+  echo -e "\033[35m【 mergeBranch $localBranch $targetBranch 】\033[0m"
+  mergeBranch  $localBranch  $targetBranch
   exit
 fi
 
