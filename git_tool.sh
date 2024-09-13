@@ -123,20 +123,20 @@ function allChangeBranch() {
           echo -e "\033[35m【 当前目录：`pwd` 】\033[0m"
     fi
 
-    # shellcheck disable=SC2045
     for name in `ls`; do
       if [[ $name == 'git-tool' || $name == 'www-frontend' || $name == 'aide' || $name == 'package' || $name == 'report' || $name == 'test-gee' || $name == 'test-cut' ]]; then
         continue
       fi
 
+      color=$[RANDOM%7 + 31]
       if [ -d $name ];then
-        cd $name || echo -e "\033[36m【 目录不存在：$name 】\033[0m"
+        cd $name || echo -e "\033[${color}m【 目录不存在：$name 】\033[0m"
         if [[  -d '.git'  ]];then
-          echo -e "\033[36m【 处理目录：$name 】\033[0m"
+          echo -e "\033[${color}m【 处理目录：$name 】\033[0m"
           finishNowBranch
           function switchBranch() {
-             echo -e "\033[35m【 切到分支：$1 】\033[0m"
-             echo -e "\033[36m【 执行：git pull origin $1 && git pull origin master && git push origin $1 】\033[0m"
+             echo -e "\033[${color}m【 切到分支：$1 】\033[0m"
+             echo -e "\033[${color}m【 执行：git pull origin $1 && git pull origin master && git push origin $1 】\033[0m"
              localBranchIn=`gitBranch`
              git checkout $1
              if [[ $localBranchIn != 'master' ]];then
@@ -148,41 +148,40 @@ function allChangeBranch() {
           # 在当前分支
           if [[ `gitBranch` == $1 ]];then
                switchBranch $1
-               echo -e "\033[32m【 目录处理成功：$name 】\033[0m"
+               echo -e "\033[${color}m【 目录处理成功：$name 】\033[0m"
                cd ../
                continue
           fi
           # 分支存在
-          color=$[RANDOM%7 + 31]
-          hashBranch=$(git branch | grep -c "\$1")
-          if [ "$hashBranch" -ge 1 ];then
+          hashBranch=$(git branch | grep -c "$1")
+          if [ $hashBranch -ge 1 ];then
             switchBranch $1
-            echo -e "\033[32m【 目录处理成功：$name 】\033[0m"
+            echo -e "\033[${color}m【 目录处理成功：$name 】\033[0m"
             cd ../
             continue
           # 分支不存在，但需要创建
           elif [[ $hashBranch != 1 && $newBranch == 1 ]];then
-             echo -e "\033[36m【 分支不存在，新建分支：$1 】\033[0m"
-             echo -e "\033[36m【 git checkout master && git pull origin master && git checkout -b $1 && git push origin $1 】\033[0m"
+             echo -e "\033[${color}m【 分支不存在，新建分支：$1 】\033[0m"
+             echo -e "\033[${color}m【 git checkout master && git pull origin master && git checkout -b $1 && git push origin $1 】\033[0m"
              git checkout master   >> /dev/null 2>&1
              git pull origin master 
              git checkout -b $1   >> /dev/null 2>&1
              git push origin $1   >> /dev/null 2>&1
-             echo -e "\033[32m【 目录处理成功：$name 】\033[0m"
+             echo -e "\033[${color}m【 目录处理成功：$name 】\033[0m"
              cd ../
              continue
           else
-             echo -e "\033[36m【 分支不存在，不新建分支 】\033[0m"
-             echo -e "\033[32m【 目录处理成功：$name 】\033[0m"
+             echo -e "\033[${color}m【 分支不存在，不新建分支 】\033[0m"
+             echo -e "\033[${color}m【 目录处理成功：$name 】\033[0m"
              cd ../
              continue
           fi
         else
-          echo -e "\033[32m【 不是git仓库：$name 】\033[0m"
+          echo -e "\033[${color}m【 不是git仓库：$name 】\033[0m"
           cd ../
           continue
         fi
-        echo -e "\033[32m【 不是目录：$name 】\033[0m"
+        echo -e "\033[${color}m【 不是目录：$name 】\033[0m"
         cd ../
       fi
     done
