@@ -154,8 +154,8 @@ function allChangeBranch() {
           fi
           # 分支存在
           color=$[RANDOM%7 + 31]
-          hashBranch=`git branch | grep $1 | wc | awk '{print $1}'`
-          if [[ $hashBranch == 1 ]];then
+          hashBranch=$(git branch | grep -c "\$1")
+          if [ "$hashBranch" -ge 1 ]];then
             switchBranch $1
             echo -e "\033[32m【 目录处理成功：$name 】\033[0m"
             cd ../
