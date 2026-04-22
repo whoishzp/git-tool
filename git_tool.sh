@@ -23,8 +23,6 @@ function help() {
   echo "mt   eg:gg mt [B]           合并当前分支到分支到B"
   echo "pm   eg:gg pm               pull origin master"
   echo "c    eg:gg c [branch]       git checkout branch"
-  echo "mf   eg:gg mf [className]   自动创建类,并追加ctx"
-  echo "api  eg:gg api              自动创建控制器api"
   echo "now  eg:gg now              返回当前所有目录所在分支"
   echo "ac  eg:gg ac A Create       将当前目录下所有git包切到指定分支, Create  = 1 时新建分支"
 }
@@ -397,38 +395,6 @@ if [[ $1 == 'c' ]]; then
   echo -e "\033[36m【 git push origin $2 】\033[0m"
   git push origin $2   >> /dev/null 2>&1
   echo -e "\033[32m【 切换分支成功 】\033[0m"
-  exit
-fi
-
-if [[ $1 == 'mf' ]]; then
-  originPath=`pwd`
-  base=`pwd`"/base"
-  if [[  ! -d $base ]]; then
-    mkdir $base
-  fi
-
-  # shellcheck disable=SC2164
-  cd "/Users/momo/Documents/project/pj-web/git-tool"
-  php "./automanager.php" $base
-  # shellcheck disable=SC2164
-  cd $originPath
-  git add .
-  exit
-fi
-
-if [[ $1 == 'api' ]]; then
-  originPath=`pwd`
-  base=`pwd`"/base"
-  if [[  ! -d $base ]]; then
-    mkdir $base
-  fi
-
-  # shellcheck disable=SC2164
-  cd "/Users/momo/Documents/project/pj-web/git-tool"
-  php "./api.php" $base
-  # shellcheck disable=SC2164
-  cd $originPath
-  git add .
   exit
 fi
 
