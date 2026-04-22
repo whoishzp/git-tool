@@ -1,2 +1,10 @@
 .idea
 .idea/*
+tpls
+tpls/*
+api.php
+automanager.php
+ctx.tpl
+mamager.tpl
+projects.sh
+tool.php
