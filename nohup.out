@@ -1,0 +1,44 @@
+Cloning into 'customer-service'...
+warning: redirecting to https://git.wemomo.com/moirai/customer-service.git/
+fetch-pack: unexpected disconnect while reading sideband packet
+Cloning into 'customer-service'...
+warning: redirecting to https://git.wemomo.com/moirai/customer-service.git/
+Cloning into 'cs-center'...
+warning: redirecting to https://git.wemomo.com/fep-csc/cs-center.git/
+Cloning into 'im-sdk'...
+warning: redirecting to https://git.wemomo.com/m-fep-projects/im-sdk.git/
+Cloning into 'code_base'...
+warning: redirecting to https://git.wemomo.com/moirai/code_base.git/
+Cloning into 'web'...
+warning: redirecting to https://git.wemomo.com/web/web.git/
+Updating files:  40% (5580/13907)Updating files:  41% (5702/13907)Updating files:  42% (5841/13907)Updating files:  43% (5981/13907)Updating files:  44% (6120/13907)Updating files:  45% (6259/13907)Updating files:  46% (6398/13907)Updating files:  47% (6537/13907)Updating files:  48% (6676/13907)Updating files:  49% (6815/13907)Updating files:  50% (6954/13907)Updating files:  51% (7093/13907)Updating files:  52% (7232/13907)Updating files:  53% (7371/13907)Updating files:  54% (7510/13907)Updating files:  55% (7649/13907)Updating files:  56% (7788/13907)Updating files:  57% (7927/13907)Updating files:  58% (8067/13907)Updating files:  59% (8206/13907)Updating files:  60% (8345/13907)Updating files:  61% (8484/13907)Updating files:  62% (8623/13907)Updating files:  63% (8762/13907)Updating files:  64% (8901/13907)Updating files:  65% (9040/13907)Updating files:  66% (9179/13907)Updating files:  67% (9318/13907)Updating files:  68% (9457/13907)Updating files:  69% (9596/13907)Updating files:  70% (9735/13907)Updating files:  71% (9874/13907)Updating files:  72% (10014/13907)Updating files:  73% (10153/13907)Updating files:  74% (10292/13907)Updating files:  75% (10431/13907)Updating files:  76% (10570/13907)Updating files:  77% (10709/13907)Updating files:  78% (10848/13907)Updating files:  79% (10987/13907)Updating files:  80% (11126/13907)Updating files:  81% (11265/13907)Updating files:  82% (11404/13907)Updating files:  83% (11543/13907)Updating files:  84% (11682/13907)Updating files:  85% (11821/13907)Updating files:  86% (11961/13907)Updating files:  86% (12096/13907)Updating files:  87% (12100/13907)Updating files:  88% (12239/13907)Updating files:  89% (12378/13907)Updating files:  90% (12517/13907)Updating files:  91% (12656/13907)Updating files:  92% (12795/13907)Updating files:  93% (12934/13907)Updating files:  94% (13073/13907)Updating files:  95% (13212/13907)Updating files:  96% (13351/13907)Updating files:  97% (13490/13907)Updating files:  98% (13629/13907)Updating files:  99% (13768/13907)Updating files: 100% (13907/13907)Updating files: 100% (13907/13907), done.
+Cloning into 'web-moa'...
+warning: redirecting to https://git.wemomo.com/moirai/web-moa.git/
+Cloning into 'ecology-frontend'...
+warning: redirecting to https://git.wemomo.com/moirai/ecology-frontend.git/
+Cloning into 'eco'...
+warning: redirecting to https://git.wemomo.com/moirai/eco.git/
+Cloning into 'eco-frontend'...
+warning: redirecting to https://git.wemomo.com/moirai/eco-frontend.git/
+Cloning into 'eco-overseas'...
+warning: redirecting to https://git.wemomo.com/moirai/eco-overseas.git/
+Cloning into 'code_base'...
+warning: redirecting to https://git.wemomo.com/web/code_base.git/
+Cloning into 'api'...
+warning: redirecting to https://git.wemomo.com/web/api.git/
+Cloning into 'ugc-tag'...
+warning: redirecting to https://git.wemomo.com/moirai-backend-fep/ugc-tag.git/
+Cloning into 'project-init'...
+warning: redirecting to https://git.wemomo.com/moirai-backend-fep/project-init.git/
+Cloning into 'moirai-fe-framework'...
+warning: redirecting to https://git.wemomo.com/han.zhipu/moirai-fe-framework.git/
+fatal: destination path 'git-tool' already exists and is not an empty directory.
+fatal: destination path 'activity-web' already exists and is not an empty directory.
+fatal: destination path 'activity-service' already exists and is not an empty directory.
+fatal: destination path 'eus-ugc-tag' already exists and is not an empty directory.
+fatal: destination path 'im-link' already exists and is not an empty directory.
+fatal: destination path 'im-send' already exists and is not an empty directory.
+fatal: destination path 'common-core' already exists and is not an empty directory.
+fatal: destination path 'dz-police-feedback' already exists and is not an empty directory.
+fatal: destination path 'java-web-backend' already exists and is not an empty directory.
+fatal: destination path 'csc-attr' already exists and is not an empty directory.
